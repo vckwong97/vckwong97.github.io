@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincent CK WONG - Data Engineer & Risk Professional</title>
+    <style>
+        :root {
+            --bg-primary: #f4f4f4;
+            --bg-secondary: #fff;
+            --bg-card: #fff;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --gradient-start: #1e3a8a;
+            --gradient-end: #3b82f6;
+            --nav-bg: #fff;
+            --nav-text: #333;
+            --nav-hover-bg: #1e3a8a;
+            --nav-hover-text: #fff;
+            --border-color: #e0e7ff;
+            --shadow: 0 3px 10px rgba(0,0,0,0.1);
+            --skill-tag-bg: #e0e7ff;
+            --skill-tag-text: #1e3a8a;
+            --footer-bg: #1e293b;
+            --contact-bg: rgba(255,255,255,0.2);
+            --progress-bg: #e0e7ff;
+            --progress-fill: #3b82f6;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --gradient-start: #3b82f6;
+            --gradient-end: #60a5fa;
+            --nav-bg: #1e293b;
+            --nav-text: #e2e8f0;
+            --nav-hover-bg: #3b82f6;
+            --nav-hover-text: #fff;
+            --border-color: #334155;
+            --shadow: 0 3px 10px rgba(0,0,0,0.5);
+            --skill-tag-bg: #334155;
+            --skill-tag-text: #60a5fa;
+            --footer-bg: #0f172a;
+            --contact-bg: rgba(255,255,255,0.1);
+            --progress-bg: #334155;
+            --progress-fill: #60a5fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Loading Screen */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader-wrapper.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(255, 255, 255, 0.2);
+            border-top: 8px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: white;
+            font-size: 1.2em;
+            margin-top: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Skeleton Screens */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        [data-theme="dark"] .skeleton {
+            background: linear-gradient(90deg, #2d2d2d 25%, #3a3a3a 50%, #2d2d2d 75%);
+            background-size: 200% 100%;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            transition: background-color 0.3s ease;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated Gradient Background */
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent,
+                rgba(255,255,255,0.1),
+                transparent
+            );
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, 30px) rotate(180deg); }
+        }
+
+        /* Floating Tech Icons */
+        .tech-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .tech-icon {
+            position: absolute;
+            font-size: 2em;
+            opacity: 0.15;
+            animation: floatIcon 20s infinite ease-in-out;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(90deg); }
+            50% { transform: translateY(-60px) rotate(180deg); }
+            75% { transform: translateY(-30px) rotate(270deg); }
+        }
+
+        /* Particle Background */
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-50px) translateX(20px); }
+            50% { transform: translateY(-100px) translateX(-20px); }
+            75% { transform: translateY(-50px) translateX(20px); }
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--contact-bg);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Typing Effect */
+        .typing-container {
+            position: relative;
+            z-index: 1;
+            min-height: 60px;
+        }
+
+        .typing-text {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 5px;
+            border-right: 3px solid white;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: typing 3.5s steps(60) 1s forwards, blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        header .location {
+            font-size: 1.1em;
+            opacity: 0.85;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: var(--contact-bg);
+            border-radius: 25px;
+            transition: 0.3s;
+            font-size: 0.95em;
+        }
+
+        .contact-info a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .download-cv-btn {
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-cv-btn button {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--gradient-start);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .download-cv-btn button:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            background: var(--nav-bg);
+            border: none;
+            color: var(--nav-text);
+            font-size: 1.5em;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        nav {
+            background: var(--nav-bg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li a {
+            display: block;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: var(--nav-text);
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            background: var(--nav-hover-bg);
+            color: var(--nav-hover-text);
+        }
+
+        section {
+            padding: 60px 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        section:nth-child(even) {
+            background: var(--bg-primary);
+        }
+
+        h2 {
+            font-size: 2.2em;
+            margin-bottom: 40px;
+            color: var(--gradient-end);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .section-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            color: var(--gradient-end);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1em;
+        }
+
+        /* Experience Timeline with Hover Effects */
+        .experience-item {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border-left: 4px solid var(--gradient-end);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .experience-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .experience-item:hover::before {
+            opacity: 0.05;
+        }
+
+        .experience-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-left-width: 8px;
+        }
+
+        .experience-header {
+            position: relative;
+            z-index: 1;
+        }
+
+        .experience-item h3 {
+            color: var(--gradient-end);
+            margin-bottom: 8px;
+            font-size: 1.4em;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover h3 {
+            color: var(--gradient-start);
+            transform: translateX(5px);
+        }
+
+        .experience-item .date {
+            color: var(--gradient-end);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover .date {
+            transform: translateX(5px);
+        }
+
+        .experience-item .company {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover .company {
+            transform: translateX(5px);
+        }
+
+        /* Achievements Section */
+        .achievements {
+            position: relative;
+            z-index: 1;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .experience-item:hover .achievements {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+
+        .achievements-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--skill-tag-bg);
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--gradient-start);
+        }
+
+        .achievements-icon {
+            font-size: 1.5em;
+        }
+
+        .experience-item ul {
+            margin-left: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .experience-item li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            padding-left: 10px;
+            border-left: 2px solid transparent;
+        }
+
+        .experience-item:hover li {
+            color: var(--text-primary);
+            border-left-color: var(--gradient-end);
+            padding-left: 15px;
+        }
+
+        /* Hover Hint */
+        .hover-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.85em;
+            color: var(--gradient-end);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .experience-item:hover .hover-hint {
+            opacity: 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .skill-category.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .skill-category h3 {
+            color: var(--gradient-end);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        /* Skill Progress Bars */
+        .skill-item {
+            margin-bottom: 20px;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .skill-level {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--progress-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gradient-start), var(--progress-fill));
+            border-radius: 10px;
+            transition: width 1.5s ease;
+            width: 0;
+        }
+
+        .skill-item.visible .progress-fill {
+            width: var(--progress-width);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: var(--skill-tag-bg);
+            color: var(--skill-tag-text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .cert-card {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--gradient-start);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .cert-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .cert-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .cert-card h3 {
+            color: var(--gradient-end);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .cert-card .issuer {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .cert-card .date {
+            color: var(--gradient-end);
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .education-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .education-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .education-card h3 {
+            color: var(--gradient-end);
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .education-card .degree {
+            color: var(--text-primary);
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .education-card .date {
+            color: var(--gradient-end);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .education-card ul {
+            margin-left: 20px;
+        }
+
+        .education-card li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: 0.3s;
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gradient-start);
+            transform: scale(1.02);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: white;
+            padding: 14px 45px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(30, 58, 138, 0.4);
+        }
+
+        footer {
+            background: var(--footer-bg);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .typing-text {
+                font-size: 1em;
+            }
+
+            .menu-toggle {
+                display: block;
+                width: 100%;
+                text-align: left;
+                padding: 15px 20px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                display: none;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li a {
+                padding: 12px 20px;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 18px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            /* Mobile hover hint */
+            .hover-hint {
+                font-size: 0.8em;
+            }
+
+            /* On mobile, show achievements by default */
+            .achievements {
+                max-height: none;
+                opacity: 1;
+                margin-top: 15px;
+            }
+
+            .hover-hint {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader-wrapper" id="loader">
+        <div class="loader"></div>
+        <div class="loader-text">Loading Portfolio...</div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <div class="container">
+        <header>
+            <div id="particles"></div>
+            <div class="tech-icons">
+                <span class="tech-icon" style="left: 10%; top: 20%; animation-delay: 0s;">🐍</span>
+                <span class="tech-icon" style="left: 85%; top: 15%; animation-delay: 2s;">💾</span>
+                <span class="tech-icon" style="left: 15%; top: 70%; animation-delay: 4s;">📊</span>
+                <span class="tech-icon" style="left: 80%; top: 65%; animation-delay: 6s;">⚡</span>
+                <span class="tech-icon" style="left: 50%; top: 40%; animation-delay: 8s;">🔧</span>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span id="themeIcon">🌙</span>
+                <span id="themeText">Dark</span>
+            </button>
+            <h1>Vincent CK WONG</h1>
+            <div class="typing-container">
+                <div class="typing-text" id="typingText"></div>
+            </div>
+            <p class="location">📍 Hong Kong SAR</p>
+            <div class="contact-info">
+                <a href="mailto:vckwong97@gmail.com">📧 vckwong97@gmail.com</a>
+                <a href="tel:+85251913336">📱 +852 5191 3336</a>
+                <a href="https://www.linkedin.com/in/vckwong97" target="_blank">💼 LinkedIn</a>
+                <a href="https://github.com/vckwong97" target="_blank">🔗 GitHub</a>
+            </div>
+            <div class="download-cv-btn">
+                <button onclick="downloadCV()">📄 Download CV</button>
+            </div>
+        </header>
+
+        <nav>
+            <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+            <ul id="navMenu">
+                <li><a href="#about" onclick="closeMenu()">About</a></li>
+                <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+                <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+                <li><a href="#education" onclick="closeMenu()">Education</a></li>
+                <li><a href="#certifications" onclick="closeMenu()">Certifications</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+            </ul>
+        </nav>
+
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="section-content">
+                <div class="about-content">
+                    <p>
+                        I am a dedicated data engineering and risk management professional with extensive experience in building automated ETL pipelines, regulatory reporting solutions, and data governance frameworks across leading financial institutions in Hong Kong.
+                    </p>
+                    <p>
+                        Currently serving as a Database Reporting Engineer at Morgan Stanley's Institutional Equity Division, I specialize in designing automated reporting solutions using SQL, Python, and Perl, while developing interactive dashboards in QlikView and Tableau to support strategic decision-making.
+                    </p>
+                    <p>
+                        My background spans risk management at the Hong Kong Monetary Authority, data management at Hang Seng Indexes Company, and data engineering in research environments. I bring expertise in cloud migration strategies, RPA development, data quality governance, and Agile methodologies.
+                    </p>
+                    <p>
+                        I hold a Bachelor of Science in Mathematics and Statistics from Hong Kong Baptist University with distinction in Advanced Computational Finance and Regression Analysis, and I'm certified in Professional Scrum (PSPO II, PSM II) and Financial Risk Management (FRM Part I).
+                    </p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Major Organizations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">Professional Certifications</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Professional Experience</h2>
+            <div class="section-content">
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Database Reporting Engineer</h3>
+                        <div class="date">Nov 2025 – Present</div>
+                        <div class="company">Morgan Stanley | Institutional Equity Division</div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievements-header">
+                            <span class="achievements-icon">🏆</span>
+                            <span>Key Achievements & Responsibilities</span>
+                        </div>
+                        <ul>
+                            <li>Design and build automated ETL and regulatory reporting solutions for Asia Equities using SQL, Perl, and Python</li>
+                            <li>Develop and maintain trading trend dashboards in QlikView and Tableau</li>
+                            <li>Optimize complex queries on DB2, Sybase, and Snowflake databases</li>
+                            <li>Collaborate with cross-functional teams to deliver data-driven insights</li>
+                        </ul>
+                    </div>
+                    <div class="hover-hint">💡 Hover to see achievements</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Officer (Risk Management & Compliance)</h3>
+                        <div class="date">Jun 2024 – Oct 2025</div>
+                        <div class="company">Hong Kong Monetary Authority | Exchange Fund Investment Office</div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievements-header">
+                            <span class="achievements-icon">🏆</span>
+                            <span>Key Achievements & Responsibilities</span>
+                        </div>
+                        <ul>
+                            <li>Conducted UAT for SimCorp Dimension platform migration</li>
+                            <li>Designed and implemented RPA solution for fund administration workflows using Python</li>
+                            <li>Performed trade portfolio reconciliation for OTC derivatives and complex financial instruments</li>
+                            <li>Enhanced risk monitoring processes and compliance reporting frameworks</li>
+                        </ul>
+                    </div>
+                    <div class="hover-hint">💡 Hover to see achievements</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Assistant Data Manager</h3>
+                        <div class="date">Mar 2022 – Jun 2024</div>
+                        <div class="company">Hang Seng Indexes Company Limited | Solutions Office</div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievements-header">
+                            <span class="achievements-icon">🏆</span>
+                            <span>Key Achievements & Responsibilities</span>
+                        </div>
+                        <ul>
+                            <li>Led development of comprehensive data glossary with 200+ Common Data Elements (CDEs)</li>
+                            <li>Participated in cloud migration strategies to Google Cloud Platform (GCP)</li>
+                            <li>Automated financial reporting processes, reducing manual effort by 80%</li>
+                            <li>Implemented data quality governance frameworks and validation protocols</li>
+                            <li>Coordinated with stakeholders to align data management with business objectives</li>
+                        </ul>
+                    </div>
+                    <div class="hover-hint">💡 Hover to see achievements</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Analyst Programmer (Data Engineering)</h3>
+                        <div class="date">Jan 2021 – Mar 2022</div>
+                        <div class="company">Hong Kong Monetary Authority | Research Department</div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievements-header">
+                            <span class="achievements-icon">🏆</span>
+                            <span>Key Achievements & Responsibilities</span>
+                        </div>
+                        <ul>
+                            <li>Designed end-to-end data pipelines using R, Python, and SQL</li>
+                            <li>Automated 30+ financial reports for economic research and analysis</li>
+                            <li>Created dynamic dashboards tracking global economic trends and indicators</li>
+                            <li>Implemented Agile methodologies to streamline development workflows</li>
+                            <li>Collaborated with researchers to translate analytical requirements into technical solutions</li>
+                        </ul>
+                    </div>
+                    <div class="hover-hint">💡 Hover to see achievements</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Skills & Expertise</h2>
+            <div class="section-content">
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Core Programming</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Python</span>
+                                <span class="skill-level">Expert</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>SQL</span>
+                                <span class="skill-level">Expert</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Perl</span>
+                                <span class="skill-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>R</span>
+                                <span class="skill-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Databases</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>DB2</span>
+                                <span class="skill-level">Expert</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Snowflake</span>
+                                <span class="skill-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>BigQuery</span>
+                                <span class="skill-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Sybase</span>
+                                <span class="skill-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Data Visualization</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Tableau</span>
+                                <span class="skill-level">Expert</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>QlikView</span>
+                                <span class="skill-level">Expert</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Power BI</span>
+                                <span class="skill-level">Advanced</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Looker</span>
+                                <span class="skill-level">Intermediate</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="--progress-width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>ETL & Data Tools</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Pentaho</span>
+                            <span class="skill-tag">Data Fusion</span>
+                            <span class="skill-tag">Dataflow</span>
+                            <span class="skill-tag">Airflow</span>
+                            <span class="skill-tag">SimCorp Dimension</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Financial Platforms</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Bloomberg Terminal</span>
+                            <span class="skill-tag">Refinitiv Eikon</span>
+                            <span class="skill-tag">FactSet</span>
+                            <span class="skill-tag">Wind</span>
+                            <span class="skill-tag">CEIC</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Development & Tools</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">Agile/Scrum</span>
+                            <span class="skill-tag">JIRA</span>
+                            <span class="skill-tag">Confluence</span>
+                            <span class="skill-tag">Excel/VBA</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Languages</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">English (Native)</span>
+                            <span class="skill-tag">Cantonese (Native)</span>
+                            <span class="skill-tag">Mandarin (Native)</span>
+                            <span class="skill-tag">Japanese (Elementary)</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Cloud & Platforms</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Google Cloud Platform</span>
+                            <span class="skill-tag">Cloud Migration</span>
+                            <span class="skill-tag">RPA Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2>Education</h2>
+            <div class="section-content">
+                <div class="education-card">
+                    <h3>Hong Kong Baptist University</h3>
+                    <div class="degree">Bachelor of Science in Mathematics and Statistics</div>
+                    <div class="date">Nov 2020</div>
+                    <ul>
+                        <li><strong>Regression Analysis:</strong> Distinction</li>
+                        <li><strong>Advanced Computational Finance:</strong> Distinction</li>
+                        <li><strong>Dean's List:</strong> Semester One, 2019-2020</li>
+                    </ul>
+                </div>
+
+                <div class="education-card">
+                    <h3>Fudan University</h3>
+                    <div class="degree">Summer Exchange Programme | School of Economics</div>
+                    <div class="date">Jul 2020</div>
+                    <ul>
+                        <li><strong>Quantitative Risk Management:</strong> A grade</li>
+                        <li><strong>Econometrics:</strong> A- grade</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications">
+            <h2>Certifications & Awards</h2>
+            <div class="section-content">
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <h3>Financial Risk Manager (FRM) Part I</h3>
+                        <div class="issuer">Global Association of Risk Professionals</div>
+                        <div class="date">Aug 2025</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <h3>Professional Scrum Product Owner™ II (PSPO II)</h3>
+                        <div class="issuer">Scrum.org</div>
+                        <div class="date">Jul 2023</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <h3>Professional Scrum Master™ II (PSM II)</h3>
+                        <div class="issuer">Scrum.org</div>
+                        <div class="date">May 2023</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <h3>Professional Scrum Master™ I (PSM I)</h3>
+                        <div class="issuer">Scrum.org</div>
+                        <div class="date">Apr 2023</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <h3>Machine Learning: From Data to Decisions</h3>
+                        <div class="issuer">MIT Professional Education</div>
+                        <div class="date">Oct 2021</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <h3>CS50x Introduction to Computer Science</h3>
+                        <div class="issuer">CS50 (Harvard University)</div>
+                        <div class="date">Aug 2021</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <h3>Machine Learning</h3>
+                        <div class="issuer">Coursera</div>
+                        <div class="date">Jul 2021</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Get In Touch</h2>
+            <div class="section-content">
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Vincent CK WONG. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="mailto:vckwong97@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/vckwong97" target="_blank">LinkedIn</a>
+                <a href="https://github.com/vckwong97" target="_blank">GitHub</a>
+                <a href="tel:+85251913336">Phone</a>
+            </div>
+            <p style="margin-top: 20px; opacity: 0.7;">Data Engineering | Risk Management | Financial Technology</p>
+        </footer>
+    </div>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // Typing Effect
+        const typingTexts = [
+            "Database Reporting Engineer | Data Engineering & Risk Management Professional"
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        const typingElement = document.getElementById('typingText');
+
+        function typeText() {
+            if (charIndex < typingTexts[textIndex].length) {
+                typingElement.textContent += typingTexts[textIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeText, 50);
+            }
+        }
+
+        setTimeout(typeText, 500);
+
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const html = document.documentElement;
+
+        let currentTheme = 'light';
+
+        themeToggle.addEventListener('click', () => {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', currentTheme);
+            updateThemeButton(currentTheme);
+        });
+
+        function updateThemeButton(theme) {
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.remove('active');
+        }
+
+        // Download CV function
+        function downloadCV() {
+            alert('CV download initiated!\n\nNote: To enable actual PDF download, you would need to:\n1. Create a PDF version of your CV\n2. Host it on your server\n3. Link to it in the download function\n\nFor now, this is a demo.');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const navHeight = document.querySelector('nav').offsetHeight;
+                const targetPosition = target.offsetTop - navHeight;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form submission
+        const form = document.querySelector('.contact-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.\n\nNote: This is a demo form. To enable actual email functionality, you would need to integrate with a backend service or email API.');
+            form.reset();
+        });
+
+        // Scroll animations - Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe experience items
+        document.querySelectorAll('.experience-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Observe skill categories
+        document.querySelectorAll('.skill-category').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Observe skill items for progress bars
+        document.querySelectorAll('.skill-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Observe education cards
+        document.querySelectorAll('.education-card').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Observe cert cards
+        document.querySelectorAll('.cert-card').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Active navigation highlight on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = '';
+                link.style.color = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.background = getComputedStyle(document.documentElement).getPropertyValue('--nav-hover-bg');
+                    link.style.color = getComputedStyle(document.documentElement).getPropertyValue('--nav-hover-text');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
